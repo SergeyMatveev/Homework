@@ -22,7 +22,7 @@ int main()
                             printf("* ");
                         }
                     }
-                    else 
+                    else
                     {
                         printf("* ");
                     }
@@ -32,4 +32,6 @@ int main()
         }
     else
         printf("Number has to be from 1 to 80");
+        
+return 0;
 }
