@@ -1,0 +1,19 @@
+#include<stdio.h>
+ 
+int main()
+{
+    int number, sotni, desatki, edenici = 0;
+    char sotni_slovo[6];
+    printf ("Vvedite chislo ot 0 do 999: ");
+    scanf ("%d", &number);//записываем число в переменную
+    sotni=number/100;//вычисляем сотни
+    desatki=((number-(sotni*100))/10);//вычисляем десятки
+    edenici=(number-sotni*100-desatki*10);//вычисляем единицы
+    switch (sotni)//свич на сотни, если 1, то написать "сто", если 2, то "двести" и т.д.
+      {
+      default:
+      sotni_slovo[6] = "Dvesti";
+      break;
+      }
+    printf ("%s,%d,%d,%d", sotni_slovo,sotni,desatki,edenici);
+}
