@@ -1,0 +1,23 @@
+#include<stdio.h>
+ 
+int factorial(double n) //отдельная функция для факториала
+  {
+      if (n<=1) 
+      {
+          return 1;
+      }
+      return n*factorial(n - 1);
+  }
+
+int main()
+  {
+     int tochnost=0;
+     printf ("Vvedite chislo ot 0 do 9: "); //вводим количество итераций, чем больше, тем точнее посчитана экспонента
+     scanf ("%d", &tochnost);
+     double e=0;
+     for (int n=0; n<tochnost; n++)
+     {
+         e=e+1.0/factorial(n);
+     }
+     printf("e=%.4f", e); //выводим на экран результат с 4 цифрами после запятой
+  }
