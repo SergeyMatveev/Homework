@@ -4,11 +4,11 @@ int main()
 {
     int number, digits[3]= {0,};
     int i;
-    char sotni_slovo[9], desatki_slovo[13], edinici_slovo[9];
+    char sotni_slovo[9], desatki_slovo[13], edinici_slovo[13];
     strcpy(sotni_slovo,"");
     strcpy(desatki_slovo,"");
     strcpy(edinici_slovo,"");
-    printf ("Vvedite chislo ot 0 do 999: ");
+    printf ("Vvedite chislo ot 1 do 999: ");
     scanf ("%d", &number);
     for(i=0; i<sizeof(digits)/sizeof(digits[0]); i++)
     {
