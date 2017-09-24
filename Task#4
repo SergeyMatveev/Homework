@@ -1,19 +1,157 @@
 #include<stdio.h>
- 
+#include <strings.h>
 int main()
 {
-    int number, sotni, desatki, edenici = 0;
-    char sotni_slovo[6];
+    int number, digits[3]= {0,};
+    int i;
+    char sotni_slovo[9], desatki_slovo[13], edinici_slovo[9];
+    strcpy(sotni_slovo,"");
+    strcpy(desatki_slovo,"");
+    strcpy(edinici_slovo,"");
     printf ("Vvedite chislo ot 0 do 999: ");
-    scanf ("%d", &number);//записываем число в переменную
-    sotni=number/100;//вычисляем сотни
-    desatki=((number-(sotni*100))/10);//вычисляем десятки
-    edenici=(number-sotni*100-desatki*10);//вычисляем единицы
-    switch (sotni)//свич на сотни, если 1, то написать "сто", если 2, то "двести" и т.д.
-      {
-      default:
-      sotni_slovo[6] = "Dvesti";
-      break;
-      }
-    printf ("%s,%d,%d,%d", sotni_slovo,sotni,desatki,edenici);
+    scanf ("%d", &number);
+    for(i=0; i<sizeof(digits)/sizeof(digits[0]); i++)
+    {
+        digits[i]=number%10;
+        number/=10;
+    }
+    switch (digits[2])
+    {
+    case 1:
+        strncpy(sotni_slovo,"Sto",sizeof(sotni_slovo));
+        break;
+    case 2:
+        strncpy(sotni_slovo,"Dvesti",sizeof(sotni_slovo));
+        break;
+    case 3:
+        strncpy(sotni_slovo,"Trista",sizeof(sotni_slovo));
+        break;
+    case 4:
+        strncpy(sotni_slovo,"Chetiresta",sizeof(sotni_slovo));
+        break;
+    case 5:
+        strncpy(sotni_slovo,"Pyatsot",sizeof(sotni_slovo));
+        break;
+    case 6:
+        strncpy(sotni_slovo,"Shestsot",sizeof(sotni_slovo));
+        break;
+    case 7:
+        strncpy(sotni_slovo,"Semsot",sizeof(sotni_slovo));
+        break;
+    case 8:
+        strncpy(sotni_slovo,"Vosemsot",sizeof(sotni_slovo));
+        break;
+    case 9:
+        strncpy(sotni_slovo,"Devyatsot",sizeof(sotni_slovo));
+        break;
+    default:
+        break;
+    }
+    if(digits[1]!=1)
+    {
+        switch (digits[1])
+        {
+        case 1:
+            strncpy(desatki_slovo,"desat",sizeof(desatki_slovo));
+            break;
+        case 2:
+            strncpy(desatki_slovo,"dvadcat",sizeof(desatki_slovo));
+            break;
+        case 3:
+            strncpy(desatki_slovo,"tridcat",sizeof(desatki_slovo));
+            break;
+        case 4:
+            strncpy(desatki_slovo,"sorok",sizeof(desatki_slovo));
+            break;
+        case 5:
+            strncpy(desatki_slovo,"pyatdesat",sizeof(desatki_slovo));
+            break;
+        case 6:
+            strncpy(desatki_slovo,"shestdesat",sizeof(desatki_slovo));
+            break;
+        case 7:
+            strncpy(desatki_slovo,"semdesyat",sizeof(desatki_slovo));
+            break;
+        case 8:
+            strncpy(desatki_slovo,"vosemdesyat",sizeof(desatki_slovo));
+            break;
+        case 9:
+            strncpy(desatki_slovo,"devyanosto",sizeof(desatki_slovo));
+            break;
+        default:
+            break;
+        }
+
+        switch (digits[0])
+        {
+        case 1:
+            strncpy(edinici_slovo,"odin",sizeof(edinici_slovo));
+            break;
+        case 2:
+            strncpy(edinici_slovo,"dva",sizeof(edinici_slovo));
+            break;
+        case 3:
+            strncpy(edinici_slovo,"tri",sizeof(edinici_slovo));
+            break;
+        case 4:
+            strncpy(edinici_slovo,"chetire",sizeof(edinici_slovo));
+            break;
+        case 5:
+            strncpy(edinici_slovo,"pyat",sizeof(edinici_slovo));
+            break;
+        case 6:
+            strncpy(edinici_slovo,"shest",sizeof(edinici_slovo));
+            break;
+        case 7:
+            strncpy(edinici_slovo,"sem",sizeof(edinici_slovo));
+            break;
+        case 8:
+            strncpy(edinici_slovo,"vosem",sizeof(edinici_slovo));
+            break;
+        case 9:
+            strncpy(edinici_slovo,"devyat",sizeof(edinici_slovo));
+            break;
+        default:
+            break;
+        }
+    }
+    else
+    {
+        switch (digits[0])
+        {
+        case 1:
+            strncpy(edinici_slovo,"odinadcat",sizeof(edinici_slovo));
+            break;
+        case 2:
+            strncpy(edinici_slovo,"dvenadcat",sizeof(edinici_slovo));
+            break;
+        case 3:
+            strncpy(edinici_slovo,"trinadcat",sizeof(edinici_slovo));
+            break;
+        case 4:
+            strncpy(edinici_slovo,"chetirnadcat",sizeof(edinici_slovo));
+            break;
+        case 5:
+            strncpy(edinici_slovo,"pyatnadcat",sizeof(edinici_slovo));
+            break;
+        case 6:
+            strncpy(edinici_slovo,"shestnadcat",sizeof(edinici_slovo));
+            break;
+        case 7:
+            strncpy(edinici_slovo,"semnadcat",sizeof(edinici_slovo));
+            break;
+        case 8:
+            strncpy(edinici_slovo,"vosemnadcat",sizeof(edinici_slovo));
+            break;
+        case 9:
+            strncpy(edinici_slovo,"devyatnadcat",sizeof(edinici_slovo));
+            break;
+        default:
+            break;
+        }
+    }
+
+    printf ("%s %s %s",sotni_slovo, desatki_slovo, edinici_slovo);
+
+    return 0;
 }
