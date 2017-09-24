@@ -4,7 +4,7 @@ int main()
 {
     int number_in_line,number_of_lines,square_size;
     printf("Square size: ");
-    scanf("%d", &square_size);
+    scanf("%d", &square_size); //input
     if (square_size>0 && square_size<80)
         {
         for (number_of_lines=1; number_of_lines<=square_size; number_of_lines++) //drawing vertical
