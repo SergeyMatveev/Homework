@@ -29,7 +29,7 @@ int main()
     int n=1;
     printf ("Vvedite chislo ot 0 do 1: "); //вводим число, чем меньше, тем точнее посчитана экспонента
     scanf ("%lf", &tochnost);
-    while(fabs(old_e - e) > tochnost)
+    while(fabs(old_e - e) > tochnost) //fabs это взять по модулю
     {
         n*=2;
         old_e = e;
