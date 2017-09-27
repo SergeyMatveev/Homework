@@ -11,7 +11,7 @@ int main()
         for (katet2=1; katet2<=client_number; katet2++)
         {
             hypotenuse = (katet1*katet1)+(katet2*katet2); //считаем гипотенузу
-            if (hypotenuse == client_number) // если гипотенуза равна задуманому числу, то выводим на экран
+            if (hypotenuse == client_number*client_number) // если гипотенуза равна задуманому числу, то выводим на экран
                 printf(" kat1 = %d, kat2 = %d, hypotenuse =  %d \n\r", katet2, katet1, client_number);
         }
     }
