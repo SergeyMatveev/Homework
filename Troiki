@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int katet1 = 0, hypotenuse = 0, client_number =0, katet2 =0;
+    printf("Choose your destiny: ");
+    scanf("%d", &client_number);
+    for (katet1=1; katet1<=client_number; katet1++)
+    {
+        for (katet2=1; katet2<=client_number; katet2++)
+        {
+            hypotenuse = (katet1*katet1)+(katet2*katet2);
+            if (hypotenuse > (client_number*client_number))
+                break;
+            else if (hypotenuse == (client_number*client_number))
+                printf(" kat1 = %d, kat2 = %d \n\r", katet2, katet1);
+        }
+    }
+    return 0;
+}
