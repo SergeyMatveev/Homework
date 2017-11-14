@@ -1,0 +1,106 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void print_till_receipt(const double *values, const int count) //функция печати чек
+{
+	int i = 0, size = 0;
+	double summ = 0;
+	char final_string[27] = "";
+	char upper_line[9] = ""; // строка с суммой чека
+
+	for (i = 0; i <= count; i++)
+	{
+		summ += *(values + i);
+	}
+
+	if (summ > 99999) // если сумма больше 99999, то выводим тескт что сумма больше 99999
+		printf("Summ is more than 99999!\n");
+
+	unsigned char fraction = (summ - ((long)summ)) * 100; // считаем копейки
+	int whole = (int)summ;
+	int u_part = (int)(whole / 1000); // u_part нужен для тысяч, которые отделены апострофом
+	int m_part = whole - (u_part * 1000);// m_part меньше тысячи, но больше копеек
+
+	if (whole > 1000) //если больше тысячи то с апострофом
+		sprintf(upper_line, "%02d'%03d.%02d", u_part, m_part, fraction);
+	else // если меньше, то без апострофа
+	{
+		sprintf(upper_line, "%06d.%02d", whole, fraction);
+		i = 0;
+		while (upper_line[i] == '0') // если ноль, то печатаем звездочки
+		{
+			upper_line[i] = '*';
+			i++;
+		}
+	}
+
+	sprintf(final_string, "%s\n---------\n123456789", upper_line); //финальные хардкодные знаки в чеке
+	puts(final_string);
+
+}
+
+int get_input_from_file(const char *filename, double *out_values, int *d_count) // функция чтения данных из файла
+{
+	int c;
+	FILE *file; //создаем указатель на file с типом FILE
+
+	*d_count = 0;//обнуляем d_count
+
+	file = fopen(filename, "r");//открываем файл
+
+	if (file)//если успешно открыт (!=0)
+	{
+		int index = 0;
+		char r_buffer[100] = "";
+
+	    while (1)
+	    {
+	    	c = getc(file);//читаем по 1 символу из файла
+
+	    	if (c == '\n' || c == EOF) //
+	    	{
+	    		out_values[*d_count] = atof(r_buffer); //переводим из строки в число "63.0" -> 63.0
+	    		memset(r_buffer, 0, sizeof(r_buffer));// очищаем буфер
+	    		index = -1;
+
+	    		if (c == EOF)
+	    			break;
+
+	    		(*d_count)++;
+	    	}
+	    	else
+	    	{
+	    		r_buffer[index] = c;//читаем строку
+	    	}
+	    	index++;
+
+	    }
+	    fclose(file); // закрываем файл
+	}
+	else
+	{
+		return EXIT_FAILURE;
+	}
+
+	return EXIT_SUCCESS;
+}
+
+int main(void)
+{
+	double from_file[100];
+	int returned;
+	int count = 0;
+	int i = 0;
+
+	returned = get_input_from_file("input.txt", &from_file, &count); //получаем данные из файла
+
+	if (returned)
+	{
+		printf("Cannot open the file\n");
+		return EXIT_FAILURE;
+	}
+
+	print_till_receipt(&from_file, count); // вызов функции с печатью чека, на вход данные из файла и сколько там элементов не нулевых
+
+	return EXIT_SUCCESS;
+}
