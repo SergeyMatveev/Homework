@@ -1,0 +1,62 @@
+#include <stdio.h>
+
+
+unsigned int is_magic(int Height, int matrix[][Height])
+{
+    unsigned int is_magic_return = 1;
+    int pivot = 0;
+    int sum1;
+    int sum2;
+    int diag1 =0;
+    int diag2 =0;
+
+    // find a pivot
+    for(int i = 0; i<Height; i++)
+    {
+        pivot += matrix[0][i];
+    }
+
+    for(int i = 0; i < Height; i++) //Суммируем в строках
+    {
+        sum1 = 0;
+        sum2 = 0;
+        for(int j = 0; j < Height; j++)
+        {
+            sum1 += matrix[i][j];
+            sum2 += matrix[j][i];
+
+        }
+        diag1 += matrix[i][i];
+        diag2 += matrix[Height-1-i][i];
+
+        if (sum1 != pivot || sum2 != pivot)
+        {
+            printf("debug %d %d %d\n", sum1, sum2, pivot);
+            is_magic_return = 0;
+        }
+
+    }
+    if (diag1 != pivot || diag2 != pivot){
+        printf("%d %d\n",diag1, diag2);
+        is_magic_return = 0;
+    }
+
+    return is_magic_return;
+}
+
+
+int main()
+{
+
+    int Height = 3;
+    int Width = 3;
+
+    int matrix[3][3] = { {2, 9, 4}, {7, 5, 3}, {6, 1, 8} };
+
+    if (is_magic(Height, matrix))
+        printf("is magic\n");
+    else
+        printf("is not magic\n");
+
+    return 0;
+}
