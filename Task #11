@@ -1,0 +1,182 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node { //новый тип данных с тремя полями (один инт значение, два указателя на левое и правое поддерево)
+	int val;
+	struct Node*left;
+	struct Node*right;
+}Node;
+
+Node* insert(Node*x, int v); //функция вставки
+void inorderPrint(Node*x); // функция печать отсортированного дерева
+void preorderPrint(Node*x); // функция печати в порядке обхода дерева
+void postorderPrint(Node*x); // функция печати в обратном порядке обхода дерева
+Node* minimum(Node*x); // функция поиска минимального значения в дереве
+Node* delete(Node* root, int v, int*f); // функция удаления
+Node* copy_bst(Node* source, Node* target); //функция копирования
+int compare(Node*x, Node*y); // функция сравнения
+Node* clear(Node*x);//функция очистки
+
+
+
+int main() {
+	Node*root1 = NULL;
+	Node*root2 = NULL;
+	int i, n;
+	FILE*input;
+	FILE*output;
+	input = fopen("input.txt", "r");
+	output = fopen("output.txt", "wb");
+	fprintf(output, "%i ", 10);
+
+	for (i = 0; i < 10; i++) {
+		n = rand() % 20;  // 0 .. 19
+		root1 = insert(root1, n);
+	}
+
+	//root1 = insert(root1, 3);
+	//root1 = insert(root1, 1);
+	//root1 = insert(root1, 4);
+	//root1 = insert(root1, 0);
+	//root1 = insert(root1, 2);
+	
+	inorderPrint(root1);
+	printf("\n");
+	preorderPrint(root1);
+	printf("\n");
+	postorderPrint(root1);
+
+	printf("\n\n");
+
+	int flag = 0;
+	Node*tmp;
+	int to_del;
+
+	while (fscanf(input, "%i", &to_del)!=EOF) {
+		flag = 0;
+		tmp = delete(root1, to_del, &flag);
+		if (flag == 1)
+			printf("Element %i deleted\n", to_del);
+		else
+			printf("Element %i not found\n", to_del);
+	}
+
+	
+	preorderPrint(root1);
+	printf("\n\n");
+
+	root2 = copy_bst(root1, root2);
+	preorderPrint(root1);
+	printf("\n");
+	preorderPrint(root2);
+	printf("\n");
+
+	root1 = clear(root1);
+	if (root1 == NULL)
+		printf("Cleared\n");
+
+	while (1);
+}
+
+Node* insert(Node*x, int v) {
+	if (x == NULL) {
+		Node*ins = (Node*)malloc(sizeof(Node)); // выдел память
+		ins->val = v;
+		ins->left = NULL;
+		ins->right = NULL;
+		return ins;
+	}
+	else { // переход влево-вправо поиск куда вставить
+		if (v < x->val)
+			x->left=insert(x->left, v);
+		else if(v > x->val)
+			x->right = insert(x->right, v);
+	}
+	return x;
+}
+
+void inorderPrint(Node*x) { // спускаемся, последнее значение печатаем, потом вправо
+	if (x != NULL) {
+		inorderPrint(x->left);
+		printf("%i ", x->val);
+		
+		inorderPrint(x->right);
+	}
+}
+
+void preorderPrint(Node*x) { // меняем момент когда выводим значение
+	if (x != NULL) {
+		printf("%i ", x->val);
+		preorderPrint(x->left);
+		preorderPrint(x->right);
+	}
+}
+
+void postorderPrint(Node*x) {// меняем момент когда выводим значение
+	if (x != NULL) {
+		postorderPrint(x->left);
+		postorderPrint(x->right);
+		printf("%i ", x->val);
+	}
+}
+
+Node* minimum(Node*x) { // поиск минимума
+	if (x->left == NULL)
+		return x;
+	return minimum(x->left);
+}
+
+Node* delete(Node* root, int v, int*f) { // на вход дерево, значение кот удалить, указатель на флаг для проверки
+	if (root == NULL)
+		return root;
+	if (v < root->val) // поиск элеменета
+		root->left = delete(root->left, v,f);
+	else if (v > root->val)
+		root->right = delete(root->right, v,f);
+	else if (root->left != NULL && root->right != NULL) { // нашли элемент у кот есть два поддерева справа и слева
+		*f = 1;
+		root->val = minimum(root->right)->val;
+		root->right = delete(root->right, root->val,f);
+	}
+	else { // нашли элемент у которого нет поддеревьев, удалили
+		*f = 1;
+		if(root->left!=NULL)
+			root=root->left;
+		else
+			root = root->right;
+	}
+	return root;
+}
+
+Node* copy_bst(Node* source, Node* target) { //копируем
+	if (source != NULL) {
+		target = insert(target, source->val);
+		copy_bst(source->left, target);
+		copy_bst(source->right, target);
+	}
+	return target;
+}
+
+int compare(Node*x, Node*y) {
+	if (x != NULL && y != NULL) {
+		if (x->val == y->val) {
+			return (compare(x->left, y->left) & compare(x->right, y->right)); //сравниваем два поддерева справа и слева, если удвл. услов. = 1. затем логическое умножение, если 1*1 = 1, а 1*0 =0
+		}
+		else
+			return 0;
+	}
+	else if (x == NULL && y == NULL)
+		return 1;
+	else
+		return 0;
+}
+
+Node* clear(Node*x) {
+	if (x != NULL) {
+		clear(x->left);
+		clear(x->right);
+		free(x); //функция освобождения памяти, но оставляет мусор, поэтому запишем x=Null;
+		x = NULL;
+		return x;
+	}
+}
