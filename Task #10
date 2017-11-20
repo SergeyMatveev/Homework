@@ -1,1 +1,133 @@
-qqq
+#include <stdio.h>
+#define MAX_SIZE 200
+
+typedef struct { //новый тип данных стэк, у которого два поля
+	char strack_array[MAX_SIZE];
+	int top;
+} stack;
+
+void init(stack *stk) {//инициализация
+	stk->top = 0;
+}
+
+void push(stack*stk, char el) {//функция записи элемента в крайнюю ячейку стека
+	if (stk->top < MAX_SIZE) {
+		stk->strack_array[stk->top] = el;
+		stk->top++;
+	}
+	else
+	{
+		printf("stack overflow\n"); //если вышли за пределы стека 200
+	}
+}
+
+char pop(stack*stk) {//функция считывания крайнего элемента в стеке с последующей перезаписью
+	if (stk->top > 0) {
+		stk->top--;
+		return stk->strack_array[stk->top];
+	}
+	else
+		printf("stack is empty\n");
+}
+
+char stkTop(stack*stk) {//функция считывания крайнего элемента в стеке без перезаписи
+	if (stk->top > 0) {
+		return stk->strack_array[stk->top-1];
+	}
+	else
+		printf("stack is empty\n");
+}
+
+int isempty(stack*stk) {//проверка на непустоту
+	if (stk->top > 0)
+		return 1;
+	else
+		return 0;
+}
+
+int isdigit(char c) {//проверка число это или нет
+	if (c != '1' && c != '2' && c != '3' && c != '4' && c != '5' && c != '6'
+		&& c != '7' && c != '8' && c != '9' && c != '0')
+		return 0;
+	else
+		return 1;
+}
+
+int isoperation(char c) {//проверка знак ли это или нет
+	if (c != '+' && c != '-' && c != '*' && c != '/')
+		return 0;
+	else
+		return 1;
+}
+
+char infix[MAX_SIZE];
+char postfix[MAX_SIZE];
+
+int main() {
+	FILE*input;
+	FILE*output;
+	input = fopen("input.txt", "r");
+	char character;
+	int length = 0;
+
+	while (fscanf(input, "%c", &character) != EOF) {
+		infix[length] = character;
+		length++;
+	}
+
+	stack* my_stack = (stack*)malloc(sizeof(stack));//выделяем память в размер стека
+	init(my_stack);
+	push(my_stack, '(');//кладем в стек первый элемент (
+	infix[length] = ')';//в инфикс крайним правым элементом записываем )
+	length++;
+
+	int i,j=0;
+	char current;
+	for (i = 0; i < length; i++) {
+		current = infix[i];
+
+		if (current == '(') {
+			push(my_stack, current);
+			continue;
+		}
+		if (isdigit(current) == 1) {
+			postfix[j] = current;
+			j++;
+			continue;
+		}
+		if (isoperation(current) == 1) {
+			while (isoperation(stkTop(my_stack))==1)
+			{
+				if (current == '+' || current == '-') {
+					postfix[j] = pop(my_stack);
+					j++;
+					continue;
+				}
+				if (current == '*' || current == '/') { // если текущий знак операции из инфикса = * или /, то записываем в постфикс верхний знак операции если он = * или /
+					if (stkTop(my_stack) == '*' || stkTop(my_stack) == '/') {
+						postfix[j] = pop(my_stack);
+						j++;
+						continue;
+					}
+				}
+				break;
+			}
+			push(my_stack, current);
+			continue;
+		}
+		if (current == ')') {
+			while (stkTop(my_stack)!='(')
+			{
+				postfix[j] = pop(my_stack);
+				j++;
+			}
+			pop(my_stack);
+		}
+	}
+
+	output = fopen("output.txt", "w");
+	for (i = 0; i < length; i++) {
+		fprintf(output,"%c", postfix[i]);
+	}
+	return 0;
+}
