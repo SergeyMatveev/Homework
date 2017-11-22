@@ -3,38 +3,52 @@
 
 double factorial(int n) //отдельная функция для факториала
 {
-    if (n<=1)
-    {
-        return 1;
-    }
-    return n*factorial(n - 1);
+	if (n <= 1)
+	{
+		return 1;
+	}
+	return n*factorial(n - 1);
 }
 
 double calc_e(int n) // считаем экспоненту
 {
-    double e = 0;
-    while(n >= 0)
-    {
-        e = e + 1.0 / factorial(n);
-        n--;
-    };
-    return e;
+	double e = 0;
+	while (n >= 0)
+	{
+		e = e + 1.0 / factorial(n);
+		n--;
+	};
+	return e;
 }
 
 int main()
 {
-    double tochnost=0;
-    double e=0;
-    double old_e=2;
-    int n=1;
-    printf ("Vvedite chislo ot 0 do 1: "); //вводим число, чем меньше, тем точнее посчитана экспонента
-    scanf ("%lf", &tochnost);
-    while(fabs(old_e - e) > tochnost) //fabs это взять по модулю
-    {
-        n*=2;
-        old_e = e;
-        e=calc_e(n);
-    }
-    printf("e=%.10lf", e); //выводим на экран результат с 10 цифрами после запятой
-    return 0;
+	double tochnost = 0;
+	double tmp;
+	int l = 0;
+	double e = 0;
+	double old_e = 2;
+	int n = 1;
+	char res[20] = "";
+
+	printf("Vvedite chislo ot 0 do 1: "); //вводим число, чем меньше, тем точнее посчитана экспонента
+	scanf("%lf", &tochnost);
+
+	tmp = tochnost;
+	while (tmp < 1) {
+		l++;
+		tmp *= 10;
+	}
+
+	while (fabs(old_e - e) > tochnost) //fabs это взять по модулю
+	{
+		n *= 2;
+		old_e = e;
+		e = calc_e(n);
+	}
+	sprintf(res, "e=%c.", '%');
+	sprintf(res, "%s%ilf", res,l);
+	printf(res, e); //выводим на экран результат с 10 цифрами после запятой
+	while (1);
+	return 0;
 }
