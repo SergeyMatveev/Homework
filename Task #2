@@ -1,8 +1,9 @@
 #include <stdio.h>
 
-int main()
-{
-int pow(int x, int p) {
+
+void main() {
+
+    int pow(int x, int p) {
 	int i,res=x;
 	if (p == 0)
 		return 1;
@@ -12,8 +13,6 @@ int pow(int x, int p) {
 	}
 	return res;
 }
-
-void binary() {
 	int n;
 	int i = 0, res = 0;
 
@@ -25,6 +24,6 @@ void binary() {
 		i++;
 	}
 	printf("%i\n\n", res);
-}
+
 return 0;
 }
