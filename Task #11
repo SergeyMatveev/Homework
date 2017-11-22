@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 typedef struct Node { //новый тип данных с тремя полями (один инт значение, два указателя на левое и правое поддерево)
 	int val;
@@ -28,6 +29,8 @@ int main() {
 	input = fopen("input.txt", "r");
 	output = fopen("output.txt", "wb");
 	fprintf(output, "%i ", 10);
+	
+	srand(time(0));
 
 	for (i = 0; i < 10; i++) {
 		n = rand() % 20;  // 0 .. 19
