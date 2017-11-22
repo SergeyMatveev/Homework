@@ -1,157 +1,157 @@
-#include<stdio.h>
-#include <strings.h>
-int main()
-{
-    int number, digits[3]= {0,};
-    int i;
-    char sotni_slovo[9], desatki_slovo[13], edinici_slovo[13];
-    strcpy(sotni_slovo,"");
-    strcpy(desatki_slovo,"");
-    strcpy(edinici_slovo,"");
-    printf ("Vvedite chislo ot 1 do 999: ");
-    scanf ("%d", &number);
-    for(i=0; i<sizeof(digits)/sizeof(digits[0]); i++)
-    {
-        digits[i]=number%10;
-        number/=10;
-    }
-    switch (digits[2])
-    {
-    case 1:
-        strncpy(sotni_slovo,"Sto",sizeof(sotni_slovo));
-        break;
-    case 2:
-        strncpy(sotni_slovo,"Dvesti",sizeof(sotni_slovo));
-        break;
-    case 3:
-        strncpy(sotni_slovo,"Trista",sizeof(sotni_slovo));
-        break;
-    case 4:
-        strncpy(sotni_slovo,"Chetiresta",sizeof(sotni_slovo));
-        break;
-    case 5:
-        strncpy(sotni_slovo,"Pyatsot",sizeof(sotni_slovo));
-        break;
-    case 6:
-        strncpy(sotni_slovo,"Shestsot",sizeof(sotni_slovo));
-        break;
-    case 7:
-        strncpy(sotni_slovo,"Semsot",sizeof(sotni_slovo));
-        break;
-    case 8:
-        strncpy(sotni_slovo,"Vosemsot",sizeof(sotni_slovo));
-        break;
-    case 9:
-        strncpy(sotni_slovo,"Devyatsot",sizeof(sotni_slovo));
-        break;
-    default:
-        break;
-    }
-    if(digits[1]!=1)
-    {
-        switch (digits[1])
-        {
-        case 1:
-            strncpy(desatki_slovo,"desat",sizeof(desatki_slovo));
-            break;
-        case 2:
-            strncpy(desatki_slovo,"dvadcat",sizeof(desatki_slovo));
-            break;
-        case 3:
-            strncpy(desatki_slovo,"tridcat",sizeof(desatki_slovo));
-            break;
-        case 4:
-            strncpy(desatki_slovo,"sorok",sizeof(desatki_slovo));
-            break;
-        case 5:
-            strncpy(desatki_slovo,"pyatdesat",sizeof(desatki_slovo));
-            break;
-        case 6:
-            strncpy(desatki_slovo,"shestdesat",sizeof(desatki_slovo));
-            break;
-        case 7:
-            strncpy(desatki_slovo,"semdesyat",sizeof(desatki_slovo));
-            break;
-        case 8:
-            strncpy(desatki_slovo,"vosemdesyat",sizeof(desatki_slovo));
-            break;
-        case 9:
-            strncpy(desatki_slovo,"devyanosto",sizeof(desatki_slovo));
-            break;
-        default:
-            break;
-        }
+#include <stdio.h>
+#include <string.h>
+#include <locale.h>
 
-        switch (digits[0])
-        {
-        case 1:
-            strncpy(edinici_slovo,"odin",sizeof(edinici_slovo));
-            break;
-        case 2:
-            strncpy(edinici_slovo,"dva",sizeof(edinici_slovo));
-            break;
-        case 3:
-            strncpy(edinici_slovo,"tri",sizeof(edinici_slovo));
-            break;
-        case 4:
-            strncpy(edinici_slovo,"chetire",sizeof(edinici_slovo));
-            break;
-        case 5:
-            strncpy(edinici_slovo,"pyat",sizeof(edinici_slovo));
-            break;
-        case 6:
-            strncpy(edinici_slovo,"shest",sizeof(edinici_slovo));
-            break;
-        case 7:
-            strncpy(edinici_slovo,"sem",sizeof(edinici_slovo));
-            break;
-        case 8:
-            strncpy(edinici_slovo,"vosem",sizeof(edinici_slovo));
-            break;
-        case 9:
-            strncpy(edinici_slovo,"devyat",sizeof(edinici_slovo));
-            break;
-        default:
-            break;
-        }
-    }
-    else
-    {
-        switch (digits[0])
-        {
-        case 1:
-            strncpy(edinici_slovo,"odinadcat",sizeof(edinici_slovo));
-            break;
-        case 2:
-            strncpy(edinici_slovo,"dvenadcat",sizeof(edinici_slovo));
-            break;
-        case 3:
-            strncpy(edinici_slovo,"trinadcat",sizeof(edinici_slovo));
-            break;
-        case 4:
-            strncpy(edinici_slovo,"chetirnadcat",sizeof(edinici_slovo));
-            break;
-        case 5:
-            strncpy(edinici_slovo,"pyatnadcat",sizeof(edinici_slovo));
-            break;
-        case 6:
-            strncpy(edinici_slovo,"shestnadcat",sizeof(edinici_slovo));
-            break;
-        case 7:
-            strncpy(edinici_slovo,"semnadcat",sizeof(edinici_slovo));
-            break;
-        case 8:
-            strncpy(edinici_slovo,"vosemnadcat",sizeof(edinici_slovo));
-            break;
-        case 9:
-            strncpy(edinici_slovo,"devyatnadcat",sizeof(edinici_slovo));
-            break;
-        default:
-            break;
-        }
-    }
 
-    printf ("%s %s %s",sotni_slovo, desatki_slovo, edinici_slovo);
 
-    return 0;
+
+void main() {
+
+	setlocale(LC_ALL, ".1251");
+
+	double n;
+	double kop;
+	int rub, l=0, i, m=0;
+	char res[200]="";
+	char inp[10] = "";
+
+	scanf("%lf", &n);
+
+	rub = (int)n;
+	kop = n- rub;
+
+	while (rub > 0) {
+		rub /= 10;
+		l++;
+	}
+
+	rub = (int)n;
+
+	sprintf(inp, "%.2f\0", n);
+
+	int cur;
+	m = 0;
+	for (i = 0; i < l; i++) {
+		if (l-i == 3) {
+			switch (inp[i])
+			{
+				case '1':
+					strcat(res, "сто ");
+					break;
+				case '2':
+					strcat(res, "двести ");
+					break;
+				case '3':
+					strcat(res, "триста ");
+					break;
+				case '4':
+					strcat(res, "четыреста ");
+					break;
+				case '5':
+					strcat(res, "пятьсот ");
+					break;
+				case '6':
+					strcat(res, "шестьсот ");
+					break;
+				case '7':
+					strcat(res, "семьсот ");
+					break;
+				case '8':
+					strcat(res, "восемсот ");
+					break;
+				case '9':
+					strcat(res, "девятьсот ");
+					break;
+			}
+		}
+		if (l-i == 2) {
+			switch (inp[i])
+			{
+			case '1':
+				m = 1;
+				break;
+			case '2':
+				strcat(res, "двадцать ");
+				break;
+			case '3':
+				strcat(res, "тридцать ");
+				break;
+			case '4':
+				strcat(res, "сорок ");
+				break;
+			case '5':
+				strcat(res, "пятьдесят ");
+				break;
+			case '6':
+				strcat(res, "шестьдесят ");
+				break;
+			case '7':
+				strcat(res, "семдесят ");
+				break;
+			case '8':
+				strcat(res, "восемдесят ");
+				break;
+			case '9':
+				strcat(res, "девяносто ");
+				break;
+			}
+		}
+		if (l-i == 1) {
+			switch (inp[i])
+			{
+			case '1':
+				(m==1)? strcat(res, "одинадцать рублей "): strcat(res, "один рубль ");
+				break;
+			case '2':
+				(m == 1) ? strcat(res, "двенадцать рублей ") : strcat(res, "два рубля ");
+				break;
+			case '3':
+				(m == 1) ? strcat(res, "тринадцать рублей ") : strcat(res, "три рубля ");
+				break;
+			case '4':
+				(m == 1) ? strcat(res, "четырнадцать рублей ") : strcat(res, "четыре рубля ");
+				break;
+			case '5':
+				(m == 1) ? strcat(res, "пятнадцать рублей ") : strcat(res, "пять рублей ");
+				break;
+			case '6':
+				(m == 1) ? strcat(res, "шестнадцать рублей ") : strcat(res, "шесть рублей ");
+				break;
+			case '7':
+				(m == 1) ? strcat(res, "семнадцать рублей ") : strcat(res, "семь рублей ");
+				break;
+			case '8':
+				(m == 1) ? strcat(res, "восемнадцать рублей ") : strcat(res, "восемь рублей ");
+				break;
+			case '9':
+				(m == 1) ? strcat(res, "девятнадцать рублей ") : strcat(res, "девять рублей ");
+				break;
+			}
+		}
+	}
+
+	sprintf(res, "%s%c%c ", res, inp[l+1], inp[l + 2]);
+
+	switch (inp[l+2])
+	{
+	case '0':
+	case '5':
+	case '6':
+	case '7':
+	case '8':
+	case '9':
+		strcat(res, "копеек");
+		break;
+	case '1':
+		strcat(res, "копейка");
+		break;
+	case '2':
+	case '3':
+	case '4':
+		strcat(res, "копейки");
+	}
+
+	printf(res);
+while (1);
+	return 0;
 }
