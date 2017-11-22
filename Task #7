@@ -3,73 +3,54 @@
 
 int mas_in[1000];
 
-void f_sort (int idx, int size)
+void f_sort(int idx, int size)
 {
-    int i = 0;
-    int min_idx = idx;
-    int min_num = mas_in[idx];
-    if (idx == size) return;
-    for( i = idx; i < size; ++i)
-    {
-        if( min_num > mas_in[i] )
-        {
-            min_num = mas_in[i];
-            min_idx = i;
-        }
-    }
-    mas_in[min_idx] = mas_in[idx];
-    mas_in[idx] = min_num;
-    f_sort( (idx+1), size );
+	int i = 0;
+	int min_idx = idx;
+	int min_num = mas_in[idx];
+	if (idx == size) return;
+	for (i = idx; i < size; ++i)
+	{
+		if (min_num > mas_in[i])
+		{
+			min_num = mas_in[i];
+			min_idx = i;
+		}
+	}
+	mas_in[min_idx] = mas_in[idx];
+	mas_in[idx] = min_num;
+	f_sort((idx + 1), size);
 }
 
 
 int main()
 {
-    char input_ch;
-    char input_mas[100], cnt = 0;
-    int size = 0, i = 0;
-    FILE *fpInput, *fpOutput;
-    fpInput = fopen("test_input.txt", "r");
-    fpOutput = fopen("test_output.txt", "w+");
+	char input_ch;
+	char input_mas[100], cnt = 0;
+	int size = 0, i = 0;
+	FILE *fpInput, *fpOutput;
+	fpInput = fopen("input.txt", "r");
+	fpOutput = fopen("output.txt", "w+");
 
-    //calc size
-    do
-    {
-        input_ch = fgetc(fpInput);
-        if((input_ch == '\n') && (cnt > 0))
-        {
-            input_mas[cnt] = '\0';
-            mas_in[size] = atoi(input_mas);
-            ++size;
-            cnt = 0;
-        }
-        else
-        {
-            input_mas[cnt] = input_ch;
-            cnt++;
-        }
-    }
-    while(input_ch != EOF);
+	
+	int abc;
+	while (fscanf(fpInput, "%i", &abc) != EOF) {
+		mas_in[size] = abc;
+		size++;
+	}
 
-    if(cnt != 0)
-    {
-        input_mas[cnt] = '\0';
-        mas_in[size] = atoi(input_mas);
-        ++size;
-    }
+	printf("size = %d\n", size);
 
-    printf("size = %d", size);
+	//sort
+	f_sort(0, size);
 
-    //sort
-    f_sort(0, size);
+	//write in file
+	for (i = 0; i < size; i++)
+	{
+		fprintf(fpOutput, "%d\n", mas_in[i]);
+	}
 
-    //write in file
-    for(i = 0; i < size; i++)
-    {
-        fprintf(fpOutput, "%d\n", mas_in[i]);
-    }
-
-    fclose(fpInput);
-    fclose(fpOutput);
-    return 0;
+	fclose(fpInput);
+	fclose(fpOutput);
+	return 0;
 }
