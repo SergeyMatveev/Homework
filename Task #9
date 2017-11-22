@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 int checkNumber(int n) {//проверка на то что число нам подходит по формату >101, <1000, и цифры не повторяются
 	char str[5];
 	int i, j, cond=1;
-	
+
 	if (n < 100 || n > 999) {
 		return 0;
 	}
@@ -15,7 +16,7 @@ int checkNumber(int n) {//проверка на то что число нам п
 				return 0;
 		}
 	}
-	
+
 	return 1;
 }
 
@@ -42,10 +43,13 @@ int inPlace(char*origin, char*n) {//фунция сравнения каждог
 }
 
 int main() {
+
 	int to_guess;
 	int cur=0;
 	char to_guess_str[5];
 	char cur_str[5];
+
+	    srand(time(0));
 
 	do {
 		to_guess=rand() % 901 + 100;
