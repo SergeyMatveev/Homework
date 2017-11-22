@@ -6,7 +6,9 @@ void print_till_receipt(const double *values, const int count) //функция 
 	int i = 0, size = 0;
 	double summ = 0;
 	char final_string[27] = "";
+    FILE *output;
 	char upper_line[9] = ""; // строка с суммой чека
+    output = fopen("output.txt", "w+");
 
 	for (i = 0; i <= count; i++)
 	{
@@ -36,6 +38,8 @@ void print_till_receipt(const double *values, const int count) //функция 
 
 	sprintf(final_string, "%s\n---------\n123456789", upper_line); //финальные хардкодные знаки в чеке
 	puts(final_string);
+	fprintf(output, final_string);
+	fclose(output);
 
 }
 
@@ -101,6 +105,8 @@ int main(void)
 	}
 
 	print_till_receipt(&from_file, count); // вызов функции с печатью чека, на вход данные из файла и сколько там элементов не нулевых
+
+
 
 	return EXIT_SUCCESS;
 }
