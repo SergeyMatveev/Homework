@@ -1,21 +1,32 @@
 #include <stdio.h>
 #include <math.h>
 
+
 void main()
 {
-    int input = 0;
+
+    int n = 0;
     int i = 0;
-    int result = 0;
+    int res = 0;
+    int check = 0;
 
-    scanf("%i", &input);
+    scanf("%i", &n);
 
-    while (input > 0)
+    while (n > 0)
     {
-        result += (input % 10)*pow(2, i);
-        input = input / 10;
-        i++;
+        check = (n % 10);
+        if (check == 1 || check ==0)
+        {
+            res += check*pow(2, i);
+            n = n / 10;
+            i++;
+        }
+        else{
+            printf("Not a binary\n");
+            break;
+        }
     }
-    printf("%i\n\n", result);
+    printf("%d\n\n", res);
 
-    return 0;
+    return;
 }
