@@ -2,156 +2,192 @@
 #include <string.h>
 #include <locale.h>
 
+void main()
+{
+    do
+    {
+        setlocale(LC_ALL, ".1251");
 
+        double input = 0;
+        double kop = 0;
+        int rub = 0;
+        int length = 0;
+        int i = 0;
+        int teen_rub = 0;
+        int teen_kop = 0;
+        char res[20] = "";
+        char inp[10] = "";
 
+        scanf("%lf", &input);
+        if (input == 0)
+        {
+            printf("ноль рублей 00 копеек");
+            return;
+        }
 
-void main() {
+        rub = (int)input;
+        kop = input - rub;
 
-	setlocale(LC_ALL, ".1251");
+        while (rub > 0)
+        {
+            rub /= 10;
+            length++;
+        }
 
-	double n;
-	double kop;
-	int rub, l=0, i, m=0;
-	char res[200]="";
-	char inp[10] = "";
+        rub = (int)input;
 
-	scanf("%lf", &n);
+        sprintf(inp, "%.2f\0", input);
 
-	rub = (int)n;
-	kop = n- rub;
+        for (i = 0; i <= length; i++)
+        {
+            if (length-i == 3)
+            {
+                switch (inp[i])
+                {
+                case '1':
+                    strcat(res, "сто ");
+                    break;
+                case '2':
+                    strcat(res, "двести ");
+                    break;
+                case '3':
+                    strcat(res, "триста ");
+                    break;
+                case '4':
+                    strcat(res, "четыреста ");
+                    break;
+                case '5':
+                    strcat(res, "пятьсот ");
+                    break;
+                case '6':
+                    strcat(res, "шестьсот ");
+                    break;
+                case '7':
+                    strcat(res, "семьсот ");
+                    break;
+                case '8':
+                    strcat(res, "восемсот ");
+                    break;
+                case '9':
+                    strcat(res, "девятьсот ");
+                    break;
+                }
+            }
+            if (length - i == 2)
+            {
+                switch (inp[i])
+                {
+                case '1':
+                    teen_rub = 1;
+                    break;
+                case '2':
+                    strcat(res, "двадцать ");
+                    break;
+                case '3':
+                    strcat(res, "тридцать ");
+                    break;
+                case '4':
+                    strcat(res, "сорок ");
+                    break;
+                case '5':
+                    strcat(res, "пятьдесят ");
+                    break;
+                case '6':
+                    strcat(res, "шестьдесят ");
+                    break;
+                case '7':
+                    strcat(res, "семдесят ");
+                    break;
+                case '8':
+                    strcat(res, "восемдесят ");
+                    break;
+                case '9':
+                    strcat(res, "девяносто ");
+                    break;
+                }
+            }
+            if (length - i == 1)
+            {
+                switch (inp[i])
+                {
+                case '1':
+                    (teen_rub == 1)? strcat(res, "одинадцать рублей "): strcat(res, "один рубль ");
+                    break;
+                case '2':
+                    (teen_rub == 1) ? strcat(res, "двенадцать рублей ") : strcat(res, "два рубля ");
+                    break;
+                case '3':
+                    (teen_rub == 1) ? strcat(res, "тринадцать рублей ") : strcat(res, "три рубля ");
+                    break;
+                case '4':
+                    (teen_rub == 1) ? strcat(res, "четырнадцать рублей ") : strcat(res, "четыре рубля ");
+                    break;
+                case '5':
+                    (teen_rub == 1) ? strcat(res, "пятнадцать рублей ") : strcat(res, "пять рублей ");
+                    break;
+                case '6':
+                    (teen_rub == 1) ? strcat(res, "шестнадцать рублей ") : strcat(res, "шесть рублей ");
+                    break;
+                case '7':
+                    (teen_rub == 1) ? strcat(res, "семнадцать рублей ") : strcat(res, "семь рублей ");
+                    break;
+                case '8':
+                    (teen_rub == 1) ? strcat(res, "восемнадцать рублей ") : strcat(res, "восемь рублей ");
+                    break;
+                case '9':
+                    (teen_rub == 1) ? strcat(res, "девятнадцать рублей ") : strcat(res, "девять рублей ");
+                    break;
+                case '0':
+                    (teen_rub == 1) ? strcat(res, "десять рублей ") : strcat(res, "рублей ");
+                    break;
+                }
+            }
+        }
 
-	while (rub > 0) {
-		rub /= 10;
-		l++;
-	}
+        sprintf(res, "%s%c%c ", res, inp[length + 1], inp[length + 2]);
+        if (inp[length + 1] == '1')
+        {
+            switch (inp[length + 2])
+            {
+            case '0':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+                strcat(res, "копеек");
+                break;
+            }
+        }
+        else
 
-	rub = (int)n;
+            switch (inp[length + 2])
+            {
+            case '0':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                strcat(res, "копеек");
+                break;
+            case '1':
+                strcat(res, "копейка");
+                break;
+            case '2':
+            case '3':
+            case '4':
+                strcat(res, "копейки");
+                break;
+            }
 
-	sprintf(inp, "%.2f\0", n);
-
-	int cur;
-	m = 0;
-	for (i = 0; i < l; i++) {
-		if (l-i == 3) {
-			switch (inp[i])
-			{
-				case '1':
-					strcat(res, "сто ");
-					break;
-				case '2':
-					strcat(res, "двести ");
-					break;
-				case '3':
-					strcat(res, "триста ");
-					break;
-				case '4':
-					strcat(res, "четыреста ");
-					break;
-				case '5':
-					strcat(res, "пятьсот ");
-					break;
-				case '6':
-					strcat(res, "шестьсот ");
-					break;
-				case '7':
-					strcat(res, "семьсот ");
-					break;
-				case '8':
-					strcat(res, "восемсот ");
-					break;
-				case '9':
-					strcat(res, "девятьсот ");
-					break;
-			}
-		}
-		if (l-i == 2) {
-			switch (inp[i])
-			{
-			case '1':
-				m = 1;
-				break;
-			case '2':
-				strcat(res, "двадцать ");
-				break;
-			case '3':
-				strcat(res, "тридцать ");
-				break;
-			case '4':
-				strcat(res, "сорок ");
-				break;
-			case '5':
-				strcat(res, "пятьдесят ");
-				break;
-			case '6':
-				strcat(res, "шестьдесят ");
-				break;
-			case '7':
-				strcat(res, "семдесят ");
-				break;
-			case '8':
-				strcat(res, "восемдесят ");
-				break;
-			case '9':
-				strcat(res, "девяносто ");
-				break;
-			}
-		}
-		if (l-i == 1) {
-			switch (inp[i])
-			{
-			case '1':
-				(m==1)? strcat(res, "одинадцать рублей "): strcat(res, "один рубль ");
-				break;
-			case '2':
-				(m == 1) ? strcat(res, "двенадцать рублей ") : strcat(res, "два рубля ");
-				break;
-			case '3':
-				(m == 1) ? strcat(res, "тринадцать рублей ") : strcat(res, "три рубля ");
-				break;
-			case '4':
-				(m == 1) ? strcat(res, "четырнадцать рублей ") : strcat(res, "четыре рубля ");
-				break;
-			case '5':
-				(m == 1) ? strcat(res, "пятнадцать рублей ") : strcat(res, "пять рублей ");
-				break;
-			case '6':
-				(m == 1) ? strcat(res, "шестнадцать рублей ") : strcat(res, "шесть рублей ");
-				break;
-			case '7':
-				(m == 1) ? strcat(res, "семнадцать рублей ") : strcat(res, "семь рублей ");
-				break;
-			case '8':
-				(m == 1) ? strcat(res, "восемнадцать рублей ") : strcat(res, "восемь рублей ");
-				break;
-			case '9':
-				(m == 1) ? strcat(res, "девятнадцать рублей ") : strcat(res, "девять рублей ");
-				break;
-			}
-		}
-	}
-
-	sprintf(res, "%s%c%c ", res, inp[l+1], inp[l + 2]);
-
-	switch (inp[l+2])
-	{
-	case '0':
-	case '5':
-	case '6':
-	case '7':
-	case '8':
-	case '9':
-		strcat(res, "копеек");
-		break;
-	case '1':
-		strcat(res, "копейка");
-		break;
-	case '2':
-	case '3':
-	case '4':
-		strcat(res, "копейки");
-	}
-
-	printf(res);
-while (1);
-	return 0;
+        printf(res);
+        printf("\n");
+    }
+    while(1);
+    return;
 }
