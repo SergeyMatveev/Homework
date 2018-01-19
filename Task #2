@@ -4,13 +4,15 @@
 
 void main()
 {
-
+do{
     int n = 0;
     int i = 0;
     int res = 0;
     int check = 0;
 
-    scanf("%i", &n);
+    scanf("%d", &n);
+
+    printf("val = %i\n", n);
 
     while (n > 0)
     {
@@ -27,6 +29,10 @@ void main()
         }
     }
     printf("%d\n\n", res);
+
+}
+while(1);
+
 
     return;
 }
