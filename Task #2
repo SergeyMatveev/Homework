@@ -10,9 +10,9 @@ do{
     int res = 0;
     int check = 0;
 
+    printf("Enter binary: ");
     scanf("%d", &n);
 
-    printf("val = %i\n", n);
 
     while (n > 0)
     {
@@ -28,7 +28,7 @@ do{
             break;
         }
     }
-    printf("%d\n\n", res);
+    printf("Decimal: %d\n\n", res);
 
 }
 while(1);
