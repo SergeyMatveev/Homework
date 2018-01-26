@@ -17,11 +17,13 @@ void main()
         int teen_kop = 0;
         char res[20] = "";
         char inp[10] = "";
+        printf("Введите число от 0 до 999,99: ");
 
         scanf("%lf", &input);
+        if (input >= 0 && input < 1000){
         if (input == 0)
         {
-            printf("ноль рублей 00 копеек");
+            printf("Ноль рублей 00 копеек");
             return;
         }
 
@@ -185,8 +187,12 @@ void main()
                 break;
             }
 
+        printf("Прописью: ");
         printf(res);
-        printf("\n");
+        printf("\n\n");
+    }
+    else
+        printf("Вне дапазона\n\n");
     }
     while(1);
     return;
