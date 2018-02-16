@@ -1,56 +1,66 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int mas_in[1000];
+int input_array[1000];
 
-void f_sort(int idx, int size)
-{
-	int i = 0;
-	int min_idx = idx;
-	int min_num = mas_in[idx];
-	if (idx == size) return;
-	for (i = idx; i < size; ++i)
-	{
-		if (min_num > mas_in[i])
-		{
-			min_num = mas_in[i];
-			min_idx = i;
-		}
-	}
-	mas_in[min_idx] = mas_in[idx];
-	mas_in[idx] = min_num;
-	f_sort((idx + 1), size);
-}
-
+void selection_sort (int, int);
 
 int main()
 {
-	char input_ch;
-	char input_mas[100], cnt = 0;
-	int size = 0, i = 0;
-	FILE *fpInput, *fpOutput;
-	fpInput = fopen("input.txt", "r");
-	fpOutput = fopen("output.txt", "w+");
+    int size = 0;
+    int i = 0;
+    int temp = 0;
 
-	
-	int abc;
-	while (fscanf(fpInput, "%i", &abc) != EOF) {
-		mas_in[size] = abc;
-		size++;
-	}
+    FILE *file_input, *file_output;
+    file_input = fopen("input.txt", "r");
+    file_output = fopen("output.txt", "w+");
 
-	printf("size = %d\n", size);
+    while (fscanf(file_input, "%i", &temp) != EOF)
+    {
+        input_array[size] = temp;
+        size++;
+    }
 
-	//sort
-	f_sort(0, size);
+    //sort
+    selection_sort(0, size);
 
-	//write in file
-	for (i = 0; i < size; i++)
-	{
-		fprintf(fpOutput, "%d\n", mas_in[i]);
-	}
+    //print out
+    printf("size = %i\n\n", size);
+    for (i = 0; i < size; i++)
+    {
+        printf("%i\n", input_array[i]);
+    }
 
-	fclose(fpInput);
-	fclose(fpOutput);
-	return 0;
+    //write in file
+    for (i = 0; i < size; i++)
+    {
+        fprintf(file_output, "%i\n", input_array[i]);
+    }
+
+    fclose(file_input);
+    fclose(file_output);
+    return 0;
+}
+
+void selection_sort(int index, int size)
+{
+    int i = 0;
+    int min_index = index;
+    int min_num = input_array[index];
+
+    if (index == size) return;
+
+    for (i = index; i < size; i++)
+    {
+        if (min_num > input_array[i])
+        {
+            min_num = input_array[i];
+            min_index = i;
+        }
+    }
+
+    input_array[min_index] = input_array[index];
+    input_array[index] = min_num;
+
+    selection_sort((index + 1), size);
 }
