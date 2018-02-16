@@ -19,7 +19,7 @@ void main()
         char inp[10] = "";
         printf("Введите число от 0 до 999,99: ");
 
-        scanf("%lf", &input);
+        scanf("%lf\2", &input);
         if (input >= 0 && input < 1000){
         if (input == 0)
         {
@@ -29,6 +29,7 @@ void main()
 
         rub = (int)input;
         kop = input - rub;
+
 
         while (rub > 0)
         {
